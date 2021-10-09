@@ -1,5 +1,5 @@
 import React from 'react'
-import Routes from './routes/index'
+import Routes from './Routes/index'
 import { BrowserRouter } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
