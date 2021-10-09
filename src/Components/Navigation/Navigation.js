@@ -1,91 +1,91 @@
-import React, { useState, useEffect } from 'react'
-import { Navbar } from 'react-bootstrap'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import { Avatar, Badge } from 'antd'
-import { Menu, Dropdown } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { auth } from '../../config/auth'
-import UserPic from '../../Assets/Necessary/user.png'
-import Logo from '../../Assets/Necessary/fhouse_logo.png'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Navbar } from "react-bootstrap";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { Avatar, Badge } from "antd";
+import { Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { auth } from "../../config/auth";
+import UserPic from "../../Assets/Necessary/user.png";
+import Logo from "../../Assets/Necessary/fhouse_logo.png";
+import { useHistory } from "react-router-dom";
 
 const Navigation = ({ cart, wishlist }) => {
-  const [scrolled, setScrolled] = React.useState(false)
-  const history = useHistory()
+  const [scrolled, setScrolled] = React.useState(false);
+  const history = useHistory();
 
-  const [cartCount, setCartCount] = useState(0)
-  const [favoCount, setFavoCount] = useState(0)
+  const [cartCount, setCartCount] = useState(0);
+  const [favoCount, setFavoCount] = useState(0);
 
   useEffect(() => {
-    let count = 0
+    let count = 0;
     cart.forEach((element) => {
-      count += element.qty
-    })
-    setCartCount(count)
-  }, [cart, cartCount])
+      count += element.qty;
+    });
+    setCartCount(count);
+  }, [cart, cartCount]);
 
   useEffect(() => {
-    let favo = 0
+    let favo = 0;
     wishlist.forEach((element) => {
-      favo += element.qty
-    })
-    setFavoCount(favo)
-  }, [wishlist, favoCount])
+      favo += element.qty;
+    });
+    setFavoCount(favo);
+  }, [wishlist, favoCount]);
 
   const [googleuser, setGoogleUser] = React.useState(
-    JSON.parse(localStorage.getItem('Googleprofile')),
-  )
+    JSON.parse(localStorage.getItem("Googleprofile"))
+  );
 
   const [firebaseUser, setFirebaseUser] = React.useState(
-    JSON.parse(localStorage.getItem('Firebaseprofile')),
-  )
+    JSON.parse(localStorage.getItem("Firebaseprofile"))
+  );
 
-  let user
+  let user;
 
   if (googleuser != null) {
-    user = googleuser
+    user = googleuser;
   } else if (firebaseUser != null) {
-    user = firebaseUser
+    user = firebaseUser;
   }
 
   React.useEffect(() => {
-    window.addEventListener('scroll', () => {
-      const isTop = window.scrollY < 100
+    window.addEventListener("scroll", () => {
+      const isTop = window.scrollY < 100;
       if (isTop !== true) {
-        setScrolled(true)
+        setScrolled(true);
       } else {
-        setScrolled(false)
+        setScrolled(false);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   const menu1 = (
     <Menu>
       <Menu.Item>
-        <Link to={{ pathname: '/profile', isApproved: true }}> My Profile</Link>
+        <Link to={{ pathname: "/profile", isApproved: true }}> My Profile</Link>
       </Menu.Item>
       <Menu.Item>
         <i
           onClick={() => {
-            auth.signOut()
-            localStorage.clear()
-            setFirebaseUser(null)
-            setGoogleUser(null)
-            history.push('/')
+            auth.signOut();
+            localStorage.clear();
+            setFirebaseUser(null);
+            setGoogleUser(null);
+            history.push("/");
           }}
         >
           Logout
         </i>
       </Menu.Item>
     </Menu>
-  )
+  );
 
   return (
     <>
-      <div className={scrolled ? 'scrolled' : 'quick-navBar'}>
+      <div className={scrolled ? "scrolled" : "quick-navBar"}>
         <div className="container-fluid">
           <Navbar expand="lg" className="over-all-nav-container">
             <Navbar.Brand>
@@ -104,14 +104,14 @@ const Navigation = ({ cart, wishlist }) => {
               className="text-center custom-collapse "
             >
               <div className="w-100 nav-items-container">
-                <ol style={{ listStyle: 'none' }}>
-                  <li style={{ display: 'inline' }}>
+                <ol style={{ listStyle: "none" }}>
+                  <li style={{ display: "inline" }}>
                     <Link
                       to="/cart"
                       style={{
-                        display: 'inline',
-                        paddingRight: '5%',
-                        color: '#213e5e',
+                        display: "inline",
+                        paddingRight: "5%",
+                        color: "#213e5e",
                       }}
                     >
                       <b className="navigation-items">My Cart</b>
@@ -119,25 +119,25 @@ const Navigation = ({ cart, wishlist }) => {
                       <span className="avatar-item">
                         <Badge
                           count={cartCount}
-                          style={{ backgroundColor: '#213e5e' }}
+                          style={{ backgroundColor: "#213e5e" }}
                         >
                           <Avatar
                             shape="circle"
                             icon={
-                              <ShoppingCartIcon style={{ color: '#213e5e' }} />
+                              <ShoppingCartIcon style={{ color: "#213e5e" }} />
                             }
                           />
                         </Badge>
                       </span>
                     </Link>
                   </li>
-                  <li style={{ display: 'inline' }}>
+                  <li style={{ display: "inline" }}>
                     <Link
                       to="/wishlist"
                       style={{
-                        display: 'inline',
-                        color: '#213e5e',
-                        paddingRight: '5%',
+                        display: "inline",
+                        color: "#213e5e",
+                        paddingRight: "5%",
                       }}
                     >
                       <b className="navigation-items">
@@ -145,12 +145,12 @@ const Navigation = ({ cart, wishlist }) => {
                         <span className="avatar-item">
                           <Badge
                             count={favoCount}
-                            style={{ backgroundColor: '#213e5e' }}
+                            style={{ backgroundColor: "#213e5e" }}
                           >
                             <Avatar
                               shape="circle"
                               icon={
-                                <FavoriteIcon style={{ color: '#213e5e' }} />
+                                <FavoriteIcon style={{ color: "#213e5e" }} />
                               }
                             />
                           </Badge>
@@ -178,9 +178,9 @@ const Navigation = ({ cart, wishlist }) => {
                       </span>
                     </Link>
                   </li> */}
-                  <li style={{ display: 'inline', paddingRight: '5%' }}>
+                  <li style={{ display: "inline", paddingRight: "5%" }}>
                     {!user ? (
-                      <Link to="/auth" style={{ color: '#213e5e' }}>
+                      <Link to="/auth" style={{ color: "#213e5e" }}>
                         <b className="navigation-items">
                           <svg
                             width={50}
@@ -199,7 +199,7 @@ const Navigation = ({ cart, wishlist }) => {
                       <>
                         <b className="navigation-items">
                           {googleuser?.data?.result?.displayName}
-                        </b>{' '}
+                        </b>{" "}
                         <Avatar
                           size={30}
                           icon={
@@ -209,18 +209,18 @@ const Navigation = ({ cart, wishlist }) => {
                               <img
                                 src={googleuser?.data?.result?.photoURL}
                                 alt="user-profile"
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: "pointer" }}
                               />
                             )
                           }
                         />
-                        <li style={{ display: 'inline', marginLeft: '20px' }}>
+                        <li style={{ display: "inline", marginLeft: "20px" }}>
                           <Dropdown overlay={menu1}>
                             <a
                               href="/"
                               className="ant-dropdown-link"
                               onClick={(e) => e.preventDefault()}
-                              style={{ color: '#213e5e' }}
+                              style={{ color: "#213e5e" }}
                             >
                               <b>Settings</b>
                               <DownOutlined />
@@ -249,12 +249,12 @@ const Navigation = ({ cart, wishlist }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 const mapStateToprops = (state) => {
   return {
     cart: state.shopping.cart,
     wishlist: state.wishlist.favorites,
-  }
-}
-export default connect(mapStateToprops)(Navigation)
+  };
+};
+export default connect(mapStateToprops)(Navigation);
